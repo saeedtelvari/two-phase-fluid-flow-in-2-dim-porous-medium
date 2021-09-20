@@ -18,15 +18,15 @@ import numpy as np
 # capillary_pressure
 
 
-# In[3]:
+# In[6]:
 
 
 def relative_permeability(S_wr, S_or, S_w, ndx, ndy):
     S_we = np.zeros([ndx, ndy])
     Kr_o = np.zeros([ndx, ndy])
     Kr_w = np.zeros([ndx, ndy])
-
-    S_we = (S_w[0] - S_wr) / (1 - S_or - S_wr)
+    
+    S_we = (S_w - S_wr) / (1 - S_or - S_wr)
     Kr_o = 0.9 * np.power(1-S_we, 2)
     Kr_w = 0.6 * np.power(S_we, 2)
     return Kr_o, Kr_w
@@ -98,7 +98,7 @@ def mobility(BCW, BCE, BCN, BCS, Kr_o, Kr_w, Vis_o, Vis_w, Bo, Bw, Po, Pw, ndx, 
     return lambda_o, lambda_w
 
 
-# In[11]:
+# In[4]:
 
 
 def viscosity(Po, Pw, ndx, ndy):
@@ -106,12 +106,12 @@ def viscosity(Po, Pw, ndx, ndy):
     Vis_w = np.zeros([ndx, ndy])
 #     for i in range(ndx):
 #         for j in range(ndy):
-    Vis_o = 2
-    Vis_w = 2
+    Vis_o += 2
+    Vis_w += 2
     return Vis_o, Vis_w
 
 
-# In[10]:
+# In[7]:
 
 
 def FVF(Po, Pw, Bo_0, Bw_0, Co, Cw, P_0, ndx, ndy, t):
@@ -121,10 +121,10 @@ def FVF(Po, Pw, Bo_0, Bw_0, Co, Cw, P_0, ndx, ndy, t):
     dBw = np.zeros([ndx, ndy])
     for i in range(ndx):
         for j in range(ndy):
-            Bo = Bo_0 / (1 + Co * (t - P_0))
-            Bw = Bw_0 / (1 + Cw * (t - P_0))
-            dBo = Co / Bo_0
-            dBw = Cw / Bw_0
+            Bo[i][j] = Bo_0 / (1 + Co * (t - P_0))
+            Bw[i][j] = Bw_0 / (1 + Cw * (t - P_0))
+            dBo[i][j] = Co / Bo_0
+            dBw[i][j] = Cw / Bw_0
     return Bo, Bw, dBo, dBw
 
 
