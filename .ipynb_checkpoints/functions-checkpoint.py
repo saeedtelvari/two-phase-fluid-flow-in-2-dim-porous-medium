@@ -18,17 +18,18 @@ import numpy as np
 # capillary_pressure
 
 
-# In[3]:
+# In[2]:
 
 
 def relative_permeability(S_wr, S_or, S_w, ndx, ndy):
     S_we = np.zeros([ndx, ndy])
     Kr_o = np.zeros([ndx, ndy])
     Kr_w = np.zeros([ndx, ndy])
-
-    S_we = (S_w[0] - S_wr) / (1 - S_or - S_wr)
-    Kr_o = 0.9 * np.power(1-S_we, 2)
-    Kr_w = 0.6 * np.power(S_we, 2)
+    for i in range(ndx):
+        for j in range(ndy):
+            S_we[i][j] = (S_w[i][j] - S_wr) / (1 - S_or - S_wr)
+            Kr_o[i][j] = 0.9 * np.power(1-S_we, 2)
+            Kr_w[i][j] = 0.6 * np.power(S_we, 2)
     return Kr_o, Kr_w
 
 
