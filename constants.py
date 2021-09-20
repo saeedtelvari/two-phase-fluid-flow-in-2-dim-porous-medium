@@ -38,18 +38,27 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[6]:
+# In[3]:
 
 
+ndt = 10000
 # Wells
-BHPo = np.array(pd.read_excel('BHPo.xlsx', header = None))
-BHPw = np.array(pd.read_excel('BHPw.xlsx', header = None))
-qo = np.array(pd.read_excel('qo.xlsx', header = None))
-qw = np.array(pd.read_excel('qw.xlsx', header = None))
-rw_o = np.array(pd.read_excel('rwo.xlsx', header = None))
-rw_w = np.array(pd.read_excel('rww.xlsx', header = None))
-So = np.array(pd.read_excel('SKw.xlsx', header = None))
-Sw = np.array(pd.read_excel('SKo.xlsx', header = None))
+BHPo = np.zeros([ndt+1, ndx, ndy])
+BHPw = np.zeros([ndt+1, ndx, ndy])
+qo = np.zeros([ndt+1, ndx, ndy])
+qw = np.zeros([ndt+1, ndx, ndy])
+rw_o = np.zeros([ndt+1, ndx, ndy])
+rw_w = np.zeros([ndt+1, ndx, ndy])
+So = np.zeros([ndt+1, ndx, ndy])
+Sw = np.zeros([ndt+1, ndx, ndy])
+BHPo[0] = np.array(pd.read_excel('BHPo.xlsx', header = None))
+BHPw[0] = np.array(pd.read_excel('BHPw.xlsx', header = None))
+qo[0] = np.array(pd.read_excel('qo.xlsx', header = None))
+qw[0] = np.array(pd.read_excel('qw.xlsx', header = None))
+rw_o[0] = np.array(pd.read_excel('rwo.xlsx', header = None))
+rw_w[0] = np.array(pd.read_excel('rww.xlsx', header = None))
+So[0] = np.array(pd.read_excel('SKw.xlsx', header = None))
+Sw[0] = np.array(pd.read_excel('SKo.xlsx', header = None))
 Bo_0 = properties['Bo0'][0]
 Bw_0 = properties['Bw0'][0]
 Ro_o = properties['ρo'][0]
@@ -64,10 +73,6 @@ Cf = properties['cf'][0]
 P_0 = properties['p0'][0]
 IBo = properties.iloc[0][12]
 IBw = properties.iloc[0][13]
-
-
-# In[9]:
-
 
 Kx = np.array(pd.read_excel('Kx.xlsx', header = None))
 Ky = np.array(pd.read_excel('Ky.xlsx', header = None))
