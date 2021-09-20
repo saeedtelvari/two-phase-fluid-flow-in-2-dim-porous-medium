@@ -128,13 +128,13 @@ def FVF(Po, Pw, Bo_0, Bw_0, Co, Cw, P_0, ndx, ndy, t):
     return Bo, Bw, dBo, dBw
 
 
-# In[13]:
+# In[8]:
 
 
 def capillary_pressure(S_wr, S_or, S_w, ndx, ndy):
     S_we = np.zeros([ndx, ndy])
-    Pc_1 = np.zeros([ndx, ndy])
-    Pc_2 = np.zeros([ndx, ndy])
+    Pc_1 = np.zeros([ndx, ndy]) # Pc
+    Pc_2 = np.zeros([ndx, ndy]) # dPc
     for i in range(ndx):
         for j in range(ndy):
             S_we[i][j] = (S_w[i][j] - S_wr) / (1 - S_wr - S_or)
@@ -147,28 +147,15 @@ def capillary_pressure(S_wr, S_or, S_w, ndx, ndy):
     return Pc_1, Pc_2
 
 
-# In[ ]:
+# In[12]:
 
 
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
+def porosity(P, Cphi, phi_0, P_0, ndx, ndy):
+    phi = np.zeros([ndx, ndy])
+    for i in range(ndx):
+        for j in range(ndy):
+            phi[i][j] = phi_0[i][j] * (1 + Cphi * (P[i][j] - P_0))
+    return phi
 
 
 # In[ ]:

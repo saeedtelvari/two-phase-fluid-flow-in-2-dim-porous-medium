@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[6]:
 
 
 import numpy as np
 import pandas as pd
 
 
-# In[2]:
+# In[7]:
 
 
 properties = pd.read_excel('Property.xlsx')
 
 
-# In[3]:
+# In[8]:
 
 
 properties
 
 
-# In[12]:
+# In[9]:
 
 
 dx = np.array(pd.read_excel('dx.xlsx', header = None))
@@ -28,7 +28,7 @@ dy = np.array(pd.read_excel('dy.xlsx', header = None))
 dz = np.array(pd.read_excel('dz.xlsx', header = None))
 
 
-# In[5]:
+# In[10]:
 
 
 BCW = np.array(pd.read_excel('BCW.xlsx', header = None))
@@ -38,25 +38,24 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[3]:
+# In[16]:
 
 
 ndt = 10000
+ndx, ndy = 10, 10
+Kr_o = np.zeros([ndt+1, ndx ,ndy])
+Kr_w = np.zeros([ndt+1, ndx ,ndy])
 # Wells
 BHPo = np.zeros([ndt+1, ndx, ndy])
 BHPw = np.zeros([ndt+1, ndx, ndy])
-qo = np.zeros([ndt+1, ndx, ndy])
-qw = np.zeros([ndt+1, ndx, ndy])
-rw_o = np.zeros([ndt+1, ndx, ndy])
-rw_w = np.zeros([ndt+1, ndx, ndy])
 So = np.zeros([ndt+1, ndx, ndy])
 Sw = np.zeros([ndt+1, ndx, ndy])
 BHPo[0] = np.array(pd.read_excel('BHPo.xlsx', header = None))
 BHPw[0] = np.array(pd.read_excel('BHPw.xlsx', header = None))
-qo[0] = np.array(pd.read_excel('qo.xlsx', header = None))
-qw[0] = np.array(pd.read_excel('qw.xlsx', header = None))
-rw_o[0] = np.array(pd.read_excel('rwo.xlsx', header = None))
-rw_w[0] = np.array(pd.read_excel('rww.xlsx', header = None))
+qo = np.array(pd.read_excel('qo.xlsx', header = None))
+qw = np.array(pd.read_excel('qw.xlsx', header = None))
+rw_w = np.array(pd.read_excel('rww.xlsx', header = None))
+rw_o = np.array(pd.read_excel('rwo.xlsx', header = None))
 So[0] = np.array(pd.read_excel('SKw.xlsx', header = None))
 Sw[0] = np.array(pd.read_excel('SKo.xlsx', header = None))
 Bo_0 = properties['Bo0'][0]
@@ -84,7 +83,7 @@ ndx, ndy = dx.shape
 r_eq = 0.14 * np.power((np.power(dx, 2) + np.power(dy, 2)), 0.5) # Equivalent drainage radius for each grid block 
 
 
-# In[10]:
+# In[12]:
 
 
 # Calclates Area and then the Transmissbility of gridblocks
@@ -121,7 +120,7 @@ def H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy):
     return h[0], h[1], h[2], h[3]
 
 
-# In[11]:
+# In[13]:
 
 
 HN, HW, HE, HS= H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy)
