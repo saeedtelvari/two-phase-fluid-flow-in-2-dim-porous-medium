@@ -93,8 +93,8 @@ def mobility(BCW, BCE, BCN, BCS, Kr_o, Kr_w, Vis_o, Vis_w, Bo, Bw, Po, Pw, ndx, 
                 lambda_o[4][i][j] = Kr_o[i][j] / (Vis_o[i][j] * Bo[i][j])
                 lambda_w[4][i][j] = Kr_w[i][j] / (Vis_w[i][j] * Bw[i][j])
             
-            lambda_o[0][i][j] = Kr_o[i][j] / (Vis_o[i][j] * Bo[i][j])
-            lambda_w[0][i][j] = Kr_w[i][j] / (Vis_w[i][j] * Bw[i][j])
+            lambda_o[0][i][j] = Kr_o[i][j] / (Vis_o[i][j] * Bo[i][j]) # for first initialization of lambda
+            lambda_w[0][i][j] = Kr_w[i][j] / (Vis_w[i][j] * Bw[i][j]) # for first initialization of lambda
     return lambda_o, lambda_w
 
 
@@ -102,6 +102,8 @@ def mobility(BCW, BCE, BCN, BCS, Kr_o, Kr_w, Vis_o, Vis_w, Bo, Bw, Po, Pw, ndx, 
 
 
 def viscosity(Po, Pw, ndx, ndy):
+    # We could use pressure dependent equations but I just decided to use constant variable for each of the viscosities
+    # I will add the equations later
     Vis_o = np.zeros([ndx, ndy])
     Vis_w = np.zeros([ndx, ndy])
 #     for i in range(ndx):
@@ -111,7 +113,7 @@ def viscosity(Po, Pw, ndx, ndy):
     return Vis_o, Vis_w
 
 
-# In[7]:
+# In[13]:
 
 
 def FVF(Po, Pw, Bo_0, Bw_0, Co, Cw, P_0, ndx, ndy, t):
@@ -121,8 +123,8 @@ def FVF(Po, Pw, Bo_0, Bw_0, Co, Cw, P_0, ndx, ndy, t):
     dBw = np.zeros([ndx, ndy])
     for i in range(ndx):
         for j in range(ndy):
-            Bo[i][j] = Bo_0 / (1 + Co * (t - P_0))
-            Bw[i][j] = Bw_0 / (1 + Cw * (t - P_0))
+            Bo[i][j] = Bo_0 / (1 + Co * (Po[i][j] - P_0))
+            Bw[i][j] = Bw_0 / (1 + Cw * (Pw[i][j] - P_0))
             dBo[i][j] = Co / Bo_0
             dBw[i][j] = Cw / Bw_0
     return Bo, Bw, dBo, dBw

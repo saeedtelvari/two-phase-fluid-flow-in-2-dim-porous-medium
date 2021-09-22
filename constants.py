@@ -38,33 +38,43 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[16]:
+# In[18]:
 
 
-ndt = 10000
+# num of time steeps
+ndt = properties['ndt'][0]
 ndx, ndy = 10, 10
+# Relative permeability of oil and water
 Kr_o = np.zeros([ndt+1, ndx ,ndy])
 Kr_w = np.zeros([ndt+1, ndx ,ndy])
-# Wells
+# Wells data - 1 production well and 1 water inj well
+# Bottom Hole Pressure
 BHPo = np.zeros([ndt+1, ndx, ndy])
 BHPw = np.zeros([ndt+1, ndx, ndy])
+# Saturation
 So = np.zeros([ndt+1, ndx, ndy])
 Sw = np.zeros([ndt+1, ndx, ndy])
+# Bottom Hole Pressure @ time = 0
 BHPo[0] = np.array(pd.read_excel('BHPo.xlsx', header = None))
 BHPw[0] = np.array(pd.read_excel('BHPw.xlsx', header = None))
+# Well production and injection stb/day
 qo = np.array(pd.read_excel('qo.xlsx', header = None))
 qw = np.array(pd.read_excel('qw.xlsx', header = None))
+# well radius
 rw_w = np.array(pd.read_excel('rww.xlsx', header = None))
 rw_o = np.array(pd.read_excel('rwo.xlsx', header = None))
+# Initial saturations (@ time = 0)
 So[0] = np.array(pd.read_excel('SKw.xlsx', header = None))
 Sw[0] = np.array(pd.read_excel('SKo.xlsx', header = None))
+# Formation Volume Factors
 Bo_0 = properties['Bo0'][0]
 Bw_0 = properties['Bw0'][0]
+# Density (Ro) for oil and water
 Ro_o = properties['ρo'][0]
 Ro_w = properties['ρw'][0]
-#
+# duration of ach time step
 dt = properties['dt'][0]
-ndt = properties['ndt'][0]
+
 Poi = properties['Poi'][0]
 Co = properties['co'][0]
 Cw = properties['cw'][0]
