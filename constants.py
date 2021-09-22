@@ -74,22 +74,28 @@ Ro_o = properties['ρo'][0]
 Ro_w = properties['ρw'][0]
 # duration of ach time step
 dt = properties['dt'][0]
-
+# Initial Pressure
 Poi = properties['Poi'][0]
+# Compressibility of oil, water and formation
 Co = properties['co'][0]
 Cw = properties['cw'][0]
 Cf = properties['cf'][0]
+# Reference Pressure
 P_0 = properties['p0'][0]
+# Internal Boundary of Wells
 IBo = properties.iloc[0][12]
 IBw = properties.iloc[0][13]
-
+# Permeability of each grid block in x and y directions
 Kx = np.array(pd.read_excel('Kx.xlsx', header = None))
 Ky = np.array(pd.read_excel('Ky.xlsx', header = None))
+# Initial porosity
 porosity_0 = pd.read_excel('phi0.xlsx', header = None)
+# Relative Density
 rel_ro_o = 0.00021584 * Ro_o * 32.17
 rel_ro_w = 0.00021584 * Ro_w * 32.17
+# num of blocks in each direction
 ndx, ndy = dx.shape
-
+# Equivalent Radius for blocks that contain wells
 r_eq = 0.14 * np.power((np.power(dx, 2) + np.power(dy, 2)), 0.5) # Equivalent drainage radius for each grid block 
 
 
