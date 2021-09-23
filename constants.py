@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[2]:
 
 
 import numpy as np
 import pandas as pd
 
 
-# In[7]:
+# In[3]:
 
 
 properties = pd.read_excel('Property.xlsx')
 
 
-# In[8]:
+# In[4]:
 
 
 properties
 
 
-# In[9]:
+# In[5]:
 
 
 dx = np.array(pd.read_excel('dx.xlsx', header = None))
@@ -28,7 +28,7 @@ dy = np.array(pd.read_excel('dy.xlsx', header = None))
 dz = np.array(pd.read_excel('dz.xlsx', header = None))
 
 
-# In[10]:
+# In[6]:
 
 
 BCW = np.array(pd.read_excel('BCW.xlsx', header = None))
@@ -38,12 +38,13 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[18]:
+# In[7]:
 
 
 # num of time steeps
 ndt = properties['ndt'][0]
 ndx, ndy = 10, 10
+alpha = np.zeros([ndt, ndx ,ndy])
 # Relative permeability of oil and water
 Kr_o = np.zeros([ndt+1, ndx ,ndy])
 Kr_w = np.zeros([ndt+1, ndx ,ndy])
@@ -139,5 +140,6 @@ def H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy):
 # In[13]:
 
 
+# Transmissibility of North, West, East and South border conditions for very block
 HN, HW, HE, HS= H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy)
 
