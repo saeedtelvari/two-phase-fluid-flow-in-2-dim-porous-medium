@@ -38,7 +38,7 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[7]:
+# In[1]:
 
 
 # num of time steeps
@@ -53,8 +53,8 @@ Kr_w = np.zeros([ndt+1, ndx ,ndy])
 BHPo = np.zeros([ndt+1, ndx, ndy])
 BHPw = np.zeros([ndt+1, ndx, ndy])
 # Saturation
-So = np.zeros([ndt+1, ndx, ndy])
-Sw = np.zeros([ndt+1, ndx, ndy])
+# So = np.zeros([ndt+1, ndx, ndy])
+# Sw = np.zeros([ndt+1, ndx, ndy])
 # Bottom Hole Pressure @ time = 0
 BHPo[0] = np.array(pd.read_excel('BHPo.xlsx', header = None))
 BHPw[0] = np.array(pd.read_excel('BHPw.xlsx', header = None))
@@ -65,8 +65,8 @@ qw = np.array(pd.read_excel('qw.xlsx', header = None))
 rw_w = np.array(pd.read_excel('rww.xlsx', header = None))
 rw_o = np.array(pd.read_excel('rwo.xlsx', header = None))
 # Initial saturations (@ time = 0)
-So[0] = np.array(pd.read_excel('SKw.xlsx', header = None))
-Sw[0] = np.array(pd.read_excel('SKo.xlsx', header = None))
+SKw = np.array(pd.read_excel('SKw.xlsx', header = None))
+SKo = np.array(pd.read_excel('SKo.xlsx', header = None))
 # Formation Volume Factors
 Bo_0 = properties['Bo0'][0]
 Bw_0 = properties['Bw0'][0]
