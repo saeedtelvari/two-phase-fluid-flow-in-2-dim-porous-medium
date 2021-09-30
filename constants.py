@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
 import pandas as pd
 
 
-# In[3]:
+# In[2]:
 
 
 properties = pd.read_excel('Property.xlsx')
 
 
-# In[4]:
+# In[3]:
 
 
 properties
 
 
-# In[5]:
+# In[4]:
 
 
 dx = np.array(pd.read_excel('dx.xlsx', header = None))
@@ -28,7 +28,7 @@ dy = np.array(pd.read_excel('dy.xlsx', header = None))
 dz = np.array(pd.read_excel('dz.xlsx', header = None))
 
 
-# In[6]:
+# In[5]:
 
 
 BCW = np.array(pd.read_excel('BCW.xlsx', header = None))
@@ -38,7 +38,7 @@ BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
 IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
 
 
-# In[1]:
+# In[6]:
 
 
 # num of time steeps
@@ -100,7 +100,7 @@ ndx, ndy = dx.shape
 r_eq = 0.14 * np.power((np.power(dx, 2) + np.power(dy, 2)), 0.5) # Equivalent drainage radius for each grid block 
 
 
-# In[12]:
+# In[7]:
 
 
 # Calclates Area and then the Transmissbility of gridblocks
@@ -137,7 +137,7 @@ def H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy):
     return h[0], h[1], h[2], h[3]
 
 
-# In[13]:
+# In[8]:
 
 
 # Transmissibility of North, West, East and South border conditions for very block
