@@ -18,7 +18,7 @@ import numpy as np
 # capillary_pressure
 
 
-# In[9]:
+# In[7]:
 
 
 def relative_permeability(S_wr, S_or, S_w, ndx, ndy):
@@ -26,18 +26,18 @@ def relative_permeability(S_wr, S_or, S_w, ndx, ndy):
     Kr_o = np.zeros([ndx, ndy])
     Kr_w = np.zeros([ndx, ndy])
     
-    Kr_o = ((-S_w + 1 - S_or)/(1 - S_or - S_wr)) ** 6
-    Kr_w = ((S_w - S_wr)/(1 - S_or - S_wr)) ** 6
-    
+#     Kr_o = ((-S_w + 1 - S_or)/(1 - S_or - S_wr)) ** 6
+#     Kr_w = ((S_w - S_wr)/(1 - S_or - S_wr)) ** 6
+    S_we = (np.subtract(S_w, S_wr)) / (1 - S_or - S_wr)
+    Kr_o = 0.9 * np.power(1-S_we, 2)
+    Kr_w = 0.6 * np.power(S_we, 2)   
     for i in range(ndx):
         for j in range(ndy):
             if Kr_o[i][j] > 1:
                 Kr_o[i][j] = 1
             if Kr_w[i][j] > 1:
                 Kr_w[i][j] = 1
-#     S_we = (S_w - S_wr) / (1 - S_or - S_wr)
-#     Kr_o = 0.9 * np.power(1-S_we, 2)
-#     Kr_w = 0.6 * np.power(S_we, 2)
+
     return Kr_o, Kr_w
 
 
@@ -104,10 +104,10 @@ def mobility(BCW, BCE, BCN, BCS, Kr_o, Kr_w, Vis_o, Vis_w, Bo, Bw, Po, Pw, ndx, 
             
             lambda_o[0][i][j] = Kr_o[i][j] / (Vis_o[i][j] * Bo[i][j]) # for first initialization of lambda
             lambda_w[0][i][j] = Kr_w[i][j] / (Vis_w[i][j] * Bw[i][j]) # for first initialization of lambda
-    return np.round(lambda_o, 6), np.round(lambda_w, 6)
+    return lambda_o, lambda_w
 
 
-# In[4]:
+# In[2]:
 
 
 def viscosity(Po, Pw, ndx, ndy):
@@ -116,7 +116,7 @@ def viscosity(Po, Pw, ndx, ndy):
     Vis_o = np.zeros([ndx, ndy])
     Vis_w = np.zeros([ndx, ndy])
     Vis_o += 2
-    Vis_w += 1
+    Vis_w += 2
     return Vis_o, Vis_w
 
 
