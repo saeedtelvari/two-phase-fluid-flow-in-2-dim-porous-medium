@@ -137,9 +137,9 @@ def H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy):
     return h[0], h[1], h[2], h[3]
 
 
-# In[9]:
+# In[10]:
 
 
-# Transmissibility of North, West, East and South border conditions for very block
+# Transmissibility of North, West, East and South border conditions for every block
 HN, HW, HE, HS= H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy)
 
