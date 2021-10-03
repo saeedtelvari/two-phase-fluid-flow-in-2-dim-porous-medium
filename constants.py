@@ -1,44 +1,44 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import numpy as np
 import pandas as pd
 
 
-# In[2]:
-
-
-properties = pd.read_excel('Property.xlsx')
-
-
 # In[3]:
 
 
-properties
+properties = pd.read_excel('data/Property.xlsx')
 
 
 # In[4]:
 
 
-dx = np.array(pd.read_excel('dx.xlsx', header = None))
-dy = np.array(pd.read_excel('dy.xlsx', header = None))
-dz = np.array(pd.read_excel('dz.xlsx', header = None))
+properties
 
 
 # In[5]:
 
 
-BCW = np.array(pd.read_excel('BCW.xlsx', header = None))
-BCN = np.array(pd.read_excel('BCN.xlsx', header = None))
-BCS = np.array(pd.read_excel('BCS.xlsx', header = None))
-BCE = np.array(pd.read_excel('BCE.xlsx', header = None))
-IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
+dx = np.array(pd.read_excel('data/dx.xlsx', header = None))
+dy = np.array(pd.read_excel('data/dy.xlsx', header = None))
+dz = np.array(pd.read_excel('data/dz.xlsx', header = None))
 
 
 # In[6]:
+
+
+BCW = np.array(pd.read_excel('data/BCW.xlsx', header = None))
+BCN = np.array(pd.read_excel('data/BCN.xlsx', header = None))
+BCS = np.array(pd.read_excel('data/BCS.xlsx', header = None))
+BCE = np.array(pd.read_excel('data/BCE.xlsx', header = None))
+IB = properties['IBC(1=Constant Flow Rate 2=Constant BHP)'][0]
+
+
+# In[7]:
 
 
 # num of time steeps
@@ -56,17 +56,17 @@ BHPw = np.zeros([ndt+1, ndx, ndy])
 # So = np.zeros([ndt+1, ndx, ndy])
 # Sw = np.zeros([ndt+1, ndx, ndy])
 # Bottom Hole Pressure @ time = 0
-BHPo[0] = np.array(pd.read_excel('BHPo.xlsx', header = None))
-BHPw[0] = np.array(pd.read_excel('BHPw.xlsx', header = None))
+BHPo[0] = np.array(pd.read_excel('data/BHPo.xlsx', header = None))
+BHPw[0] = np.array(pd.read_excel('data/BHPw.xlsx', header = None))
 # Well production and injection stb/day
-qo = np.array(pd.read_excel('qo.xlsx', header = None))
-qw = np.array(pd.read_excel('qw.xlsx', header = None))
+qo = np.array(pd.read_excel('data/qo.xlsx', header = None))
+qw = np.array(pd.read_excel('data/qw.xlsx', header = None))
 # well radius
-rw_w = np.array(pd.read_excel('rww.xlsx', header = None))
-rw_o = np.array(pd.read_excel('rwo.xlsx', header = None))
+rw_w = np.array(pd.read_excel('data/rww.xlsx', header = None))
+rw_o = np.array(pd.read_excel('data/rwo.xlsx', header = None))
 # Initial saturations (@ time = 0)
-SKw = np.array(pd.read_excel('SKw.xlsx', header = None))
-SKo = np.array(pd.read_excel('SKo.xlsx', header = None))
+SKw = np.array(pd.read_excel('data/SKw.xlsx', header = None))
+SKo = np.array(pd.read_excel('data/SKo.xlsx', header = None))
 # Formation Volume Factors
 Bo_0 = properties['Bo0'][0]
 Bw_0 = properties['Bw0'][0]
@@ -87,10 +87,10 @@ P_0 = properties['p0'][0]
 IBo = properties.iloc[0][12]
 IBw = properties.iloc[0][13]
 # Permeability of each grid block in x and y directions
-Kx = np.array(pd.read_excel('Kx.xlsx', header = None))
-Ky = np.array(pd.read_excel('Ky.xlsx', header = None))
+Kx = np.array(pd.read_excel('data/Kx.xlsx', header = None))
+Ky = np.array(pd.read_excel('data/Ky.xlsx', header = None))
 # Initial porosity
-porosity_0 = pd.read_excel('phi0.xlsx', header = None)
+porosity_0 = pd.read_excel('data/phi0.xlsx', header = None)
 # Relative Density
 rel_ro_o = 0.00021584 * Ro_o * 32.17
 rel_ro_w = 0.00021584 * Ro_w * 32.17
@@ -100,7 +100,7 @@ ndx, ndy = dx.shape
 r_eq = 0.14 * np.power((np.power(dx, 2) + np.power(dy, 2)), 0.5) # Equivalent drainage radius for each grid block 
 
 
-# In[7]:
+# In[8]:
 
 
 # Calclates Area and then the Transmissbility of gridblocks
@@ -137,7 +137,7 @@ def H(BCW, BCN, BCE, BCS, dx, dy, dz, Kx, Ky, ndx, ndy):
     return h[0], h[1], h[2], h[3]
 
 
-# In[8]:
+# In[9]:
 
 
 # Transmissibility of North, West, East and South border conditions for very block
